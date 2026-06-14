@@ -1,5 +1,5 @@
-from rest_framework.response import Response
 from rest_framework import generics, permissions
+from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -48,7 +48,6 @@ class ProductDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
 
-        # Обработка фото
         if 'image' in request.FILES:
             instance.image = request.FILES['image']
 
@@ -56,10 +55,25 @@ class ProductDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
         return Response(serializer.data)
 
 
-class CategoryListAPIView(generics.ListAPIView):
+class CategoryListAPIView(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAdminUser]
+
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            return [permissions.AllowAny()]
+        return [permissions.IsAdminUser()]
+
+
+class CategoryDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            return [permissions.AllowAny()]
+        return [permissions.IsAdminUser()]
 
 
 class MyProductsAPIView(generics.ListAPIView):

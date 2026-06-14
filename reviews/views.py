@@ -34,3 +34,9 @@ class AllReviewsAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         return Review.objects.all()
+
+
+class ReviewDetailAPIView(generics.DestroyAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    permission_classes = [permissions.IsAdminUser]

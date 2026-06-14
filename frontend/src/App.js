@@ -10,6 +10,7 @@ import EditProductPage from './EditProductPage';
 import ProductPage from './ProductPage';
 import MyReviewsPage from './MyReviewsPage';
 import AdminPanel from './AdminPanel';
+import AdminFullPanel from './AdminFullPanel';
 import ProfilePage from './ProfilePage';
 import SellerReviewsPage from './SellerReviewsPage';
 import ProductReviewPage from './ProductReviewPage';
@@ -69,7 +70,10 @@ function Navbar() {
                 {user.role === 'admin' && (
                   <>
                     <li className="nav-item">
-                      <Link className="nav-link" to="/admin-panel">👑 Админ панель</Link>
+                      <Link className="nav-link" to="/admin-full">👑 Полная админка</Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/admin-panel">⚡ Быстрая админка</Link>
                     </li>
                     <li className="nav-item">
                       <a className="nav-link" href="http://127.0.0.1:8000/admin/" target="_blank" rel="noreferrer">
@@ -221,6 +225,7 @@ function App() {
         <Route path="/edit-product/:id" element={<EditProductPage />} />
         <Route path="/my-reviews" element={<MyReviewsPage />} />
         <Route path="/admin-panel" element={<AdminPanel />} />
+        <Route path="/admin-full" element={<AdminFullPanel />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/seller-reviews" element={<SellerReviewsPage />} />
       </Routes>
